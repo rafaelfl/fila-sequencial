@@ -89,12 +89,14 @@ int main(void) {
     printf("não CHEIA\n");
   }
 
-  // enfileirar(f, 'X');
-  // enfileirar(f, 'L');
-  // imprimir_fila(f);
-  // desenfileirar(f);
-  // desenfileirar(f);
-  // imprimir_fila(f);
+  enfileirar(f, 'X');
+  enfileirar(f, 'L');
+  enfileirar(f, 'R');
+  enfileirar(f, '8');
+  imprimir_fila(f);
+  desenfileirar(f);
+  desenfileirar(f);
+  imprimir_fila(f);
 
   //  if (esta_vazia(f)) {
   //   printf("VAZIA\n");

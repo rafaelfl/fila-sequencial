@@ -18,14 +18,22 @@ void liberar_fila(Fila *f) {
   free(f);
 }
 
+int inc(int i) {
+  // if (i == TAM-1) {
+  //   return 0;
+  // }
+
+  // return i+1;
+
+  return (i+1) % TAM;
+}
+
 int enfileirar(Fila *f, char valor) {
   // se tiver espaço no vetor para armazenar elementos
-  if (f->fim < TAM) {
-    int fim_da_fila = f->fim;
+  if (esta_cheia(f) == FALSE) {
+    f->v[f->fim] = valor;
 
-    f->v[fim_da_fila] = valor;
-
-    f->fim++;
+    f->fim = inc(f->fim);
 
     return 0;
   } else {
@@ -37,20 +45,12 @@ char desenfileirar (Fila *f) {
   int i = 0;
 
   // existe algo para desenfileirar
-  if (f->ini < f->fim) {
-    int ini_da_fila = f->ini;
-    int fim_da_fila = f->fim;
+  if (esta_vazia(f) == FALSE) {
+    char c;
 
-    // guardo uma copia do inicio da fila
-    char c = f->v[ini_da_fila];
+    c = f->v[f->ini];
 
-    // copio cada um dos elementos uma posição para trás (substituindo o inicio)
-    for (i = ini_da_fila+1; i < fim_da_fila; i++) {
-      f->v[i-1] = f->v[i];
-    }
-
-    // como eu removi um elemento, decremento o fim da fila
-    f->fim--;
+    f->ini = inc(f->ini);
 
     return c;
   } else {
@@ -67,20 +67,22 @@ int esta_vazia(Fila *f) {
 }
 
 int esta_cheia(Fila *f) {
-  if (f->fim < TAM) {
-    return FALSE;
-  } else {
+  if (inc(f->fim) == f->ini) {
     return TRUE;
+  } else {
+    return FALSE;
   }
 }
 
 void imprimir_fila(Fila *f) {
-  int i = 0;
+  int i = f->ini;
 
   printf("[ini] ");
 
-  for (i = f->ini; i < f->fim; i++) {
+  while (i != f->fim) {
     printf (" %c ", f->v[i]);
+
+    i = inc(i);
   }
 
   printf(" [fim]\n");
